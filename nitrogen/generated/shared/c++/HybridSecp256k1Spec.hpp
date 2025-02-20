@@ -17,6 +17,7 @@
 namespace NitroModules { class ArrayBuffer; }
 
 #include <NitroModules/ArrayBuffer.hpp>
+#include <optional>
 
 namespace margelo::nitro::nitrocrypto {
 
@@ -51,6 +52,20 @@ namespace margelo::nitro::nitrocrypto {
       // Methods
       virtual bool privateKeyIsValid(const std::shared_ptr<ArrayBuffer>& privateKey) = 0;
       virtual std::shared_ptr<ArrayBuffer> privateKeyToPublicKey(const std::shared_ptr<ArrayBuffer>& privateKey, bool compressed) = 0;
+      virtual bool publicKeyIsValid(const std::shared_ptr<ArrayBuffer>& publicKey, bool compressed) = 0;
+      virtual std::shared_ptr<ArrayBuffer> publicKeyConvert(const std::shared_ptr<ArrayBuffer>& publicKey, bool compressed) = 0;
+      virtual bool xOnlyIsValid(const std::shared_ptr<ArrayBuffer>& xOnly) = 0;
+      virtual std::shared_ptr<ArrayBuffer> privateKeyTweakAdd(const std::shared_ptr<ArrayBuffer>& privateKey, const std::shared_ptr<ArrayBuffer>& tweak) = 0;
+      virtual std::shared_ptr<ArrayBuffer> privateKeyTweakSubtract(const std::shared_ptr<ArrayBuffer>& privateKey, const std::shared_ptr<ArrayBuffer>& tweak) = 0;
+      virtual std::shared_ptr<ArrayBuffer> privateKeyTweakNegate(const std::shared_ptr<ArrayBuffer>& privateKey) = 0;
+      virtual std::shared_ptr<ArrayBuffer> publicKeyTweakAddPoint(const std::shared_ptr<ArrayBuffer>& publicKey, const std::shared_ptr<ArrayBuffer>& tweakPoint, bool compressed) = 0;
+      virtual std::shared_ptr<ArrayBuffer> publicKeyTweakAddScalar(const std::shared_ptr<ArrayBuffer>& publicKey, const std::shared_ptr<ArrayBuffer>& tweak, bool compressed) = 0;
+      virtual std::shared_ptr<ArrayBuffer> publicKeyTweakMultiply(const std::shared_ptr<ArrayBuffer>& publicKey, const std::shared_ptr<ArrayBuffer>& tweak, bool compressed) = 0;
+      virtual std::shared_ptr<ArrayBuffer> xOnlyTweakAdd(const std::shared_ptr<ArrayBuffer>& xOnly, const std::shared_ptr<ArrayBuffer>& tweak, bool compressed) = 0;
+      virtual std::shared_ptr<ArrayBuffer> ecdsaSignHash(const std::shared_ptr<ArrayBuffer>& hash, const std::shared_ptr<ArrayBuffer>& privateKey, bool der, bool recovery, const std::optional<std::shared_ptr<ArrayBuffer>>& extraEntropy) = 0;
+      virtual bool ecdsaVerifyHash(const std::shared_ptr<ArrayBuffer>& signature, const std::shared_ptr<ArrayBuffer>& hash, const std::shared_ptr<ArrayBuffer>& publicKey) = 0;
+      virtual std::shared_ptr<ArrayBuffer> schnorrSign(const std::shared_ptr<ArrayBuffer>& message, const std::shared_ptr<ArrayBuffer>& privateKey, const std::optional<std::shared_ptr<ArrayBuffer>>& extraEntropy) = 0;
+      virtual bool schnorrVerify(const std::shared_ptr<ArrayBuffer>& signature, const std::shared_ptr<ArrayBuffer>& message, const std::shared_ptr<ArrayBuffer>& xOnly) = 0;
 
     protected:
       // Hybrid Setup

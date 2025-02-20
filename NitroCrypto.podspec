@@ -20,11 +20,23 @@ Pod::Spec.new do |s|
     "ios/**/*.{m,mm}",
     # Implementation (C++ objects)
     "cpp/**/*.{hpp,cpp}",
+    # libsecp256k1 dependency (C)
+    "cpp/secp256k1/{include}/*.{h}",
   ]
+
+  # Include the precompiled static library
+  s.vendored_libraries = "cpp/secp256k1/build/ios/libsecp256k1.a"
+  
+  # Link the static library at runtime
+  s.libraries = "secp256k1"
+  
+  s.static_framework = true
 
   s.pod_target_xcconfig = {
     # C++ compiler flags, mainly for folly.
     "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) FOLLY_NO_CONFIG FOLLY_CFG_NO_COROUTINES"
+    # libsecp256k1 flags
+    # "OTHER_CFLAGS" => "$(inherited) -DUSE_NUM_NONE=1 -DUSE_FIELD_INV_BUILTIN=1 -DUSE_SCALAR_INV_BUILTIN=1 -DUSE_FIELD_10X26=1 -DUSE_SCALAR_8X32=1 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_RECOVERY=1"
   }
 
   load 'nitrogen/generated/ios/NitroCrypto+autolinking.rb'
