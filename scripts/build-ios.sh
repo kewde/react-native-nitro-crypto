@@ -41,6 +41,8 @@ for PLATFORM in "${PLATFORMS[@]}"; do
         ./configure \
             --host=$HOST \
             --disable-tests \
+            --disable-exhaustive-tests \
+            --disable-benchmark \
             --enable-module-recovery \
             --disable-shared \
             --enable-static \
